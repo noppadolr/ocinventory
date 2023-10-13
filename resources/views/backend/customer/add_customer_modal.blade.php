@@ -54,8 +54,9 @@
                             <img class="img-fluid rounded" id="showImage" src="{{ url('upload/no_image.jpg') }}" alt="">
                         </div>
                     </div>
-                </div>
-{{--                Modal body--}}
+
+                </div>  {{--Modal body--}}
+
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

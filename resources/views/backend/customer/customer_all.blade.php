@@ -49,6 +49,7 @@
 
                                         <td>{{$key+1}}</td>
                                         <td>{{ $item->name }}</td>
+                                        <td>{{ $item->photo }}</td>
                                         <td>{{ $item->phone }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->address }}</td>
@@ -109,6 +110,26 @@
                                                                 <input id="address" class="form-control" name="address" type="text" value="{{$item->address}}">
                                                             </div>
                                                         </div>
+
+                                                        <div class=" mb-3">
+                                                            <label for="image" class="col-sm-1 col-form-label">Photo</label>
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="file" name="photo" id="image" >
+                                                            </div>
+                                                        </div>
+
+
+                                                        {{--  รอแก้ไขถ้ามีรูปให้แสดงรูป ถ้าไม่มีให้แสดง noimage  --}}
+                                                        <div class="mb-2">
+                                                            <label for="showImage" class="col-sm-1 col-form-label"></label>
+                                                            <div class="form-group">
+                                                                <img class="img-fluid rounded" id="showImage" src="{{ url('upload/no_image.jpg') }}" alt="">
+                                                            </div>
+                                                        </div>
+
+
+
+
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -136,6 +157,8 @@
         <script src="{{asset('admin/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js')}}"></script>
         <!-- End plugin js for this page -->
         <script src="{{asset('admin/assets/js/data-table.js')}}"></script>
+
+        {{--  ล้างข้อมูลใน Modal หลังปิด Modal  --}}
         <script>
             $("#exampleModal").on('hidden.bs.modal', function () {
                 $('#myForm').find("input[type=text], input[type=email]").val("");
@@ -143,9 +166,11 @@
                 $('.form-control').removeClass('is-invalid');
 
                     $(this).find('form').trigger('reset');
+                    $('#showImage').attr('src','');
 
             });
         </script>
+        {{--  เปลี่ยนรูปกรณีเลือกรูป  --}}
         <script type="text/javascript">
 
             $(document).ready(function(){
@@ -159,6 +184,7 @@
             });
 
         </script>
+        {{--  validate ข้อมูลก่อน save  --}}
         <script src="{{asset('validate.min.js')}}"></script>
         <script type="text/javascript">
             $(document).ready(function (){
@@ -180,16 +206,16 @@
                     },
                     messages :{
                         name: {
-                            required : 'Please Enter Supplier Name',
+                            required : 'Please Enter Customer Name',
                         },
                         phone: {
-                            required : 'Please Enter Supplier Phone Number',
+                            required : 'Please Enter Customer Phone Number',
                         },
                         address: {
-                            required : 'Please Enter Supplier Address',
+                            required : 'Please Enter Customer Address',
                         },
                         email: {
-                            required : 'Please Enter Supplier EmailAddress',
+                            required : 'Please Enter Customer EmailAddress',
                         },
 
 
@@ -208,6 +234,8 @@
                 });
             });
         </script>
+
+        {{--  แสดง sweet alert หลังจากบันทึกใหม่หรือบันทึกการแก้ไขเสร็จ  --}}
         <script type="text/javascript">
             @if(Session::has('supplierAdded'))
             $(document).ready( function () {
@@ -219,6 +247,8 @@
             });
             @endif
         </script>
+
+        {{--  แสดง sweet alert เพื่อยืนยันการลบข้อมูล  --}}
         <script type="text/javascript">
             function deleteCustomer(id)
             {
